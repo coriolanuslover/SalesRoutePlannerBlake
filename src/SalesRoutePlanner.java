@@ -1,8 +1,9 @@
 // TODO: Low Medium High Critical
 //  Low: Truncate doubles to 2 decimal places
 //  Medium: Exceptions for non-integers/characters for int inputs
+//  Medium: Exceptions for non-integer/charcter/0 for Waypoints inputs
+//  Medium: Exceptions for spaces after final inout for Waypoints inputs
 //  Medium: Exceptions for characters in double inputs
-//  High: Add print statement for sales route planner (Waypoint numbers with destinations)
 
 import java.util.Scanner;
 public class SalesRoutePlanner {
@@ -29,33 +30,46 @@ public class SalesRoutePlanner {
                 "4 Conway           9 Pickens\n" +
                 "5 Florence         10 Spartanburg\n");
         System.out.println("Enter route waypoints by number, separated by a space: ");
-        String unconvWaypoints = input.nextLine();
-        String[] stillunconvWaypoints = unconvWaypoints.split(" ");
-        int[] Waypoints = new int[stillunconvWaypoints.length];
-        for(int i = 0; i < stillunconvWaypoints.length; i++) {
-            Waypoints[i] = Integer.parseInt(stillunconvWaypoints[i]);
+        String stringWaypoints = input.nextLine();
+        // Converts string line w/ spaces to string array
+        String[] stringArrayWaypoints = stringWaypoints.split(" ");
+        // Converts String array to Int array
+        int[] Waypoints = new int[stringArrayWaypoints.length];
+        for(int i = 0; i < stringArrayWaypoints.length; i++) {
+            Waypoints[i] = Integer.parseInt(stringArrayWaypoints[i]);
         }
+
         System.out.println("Enter vehicle MPG: ");
         double MPG = input.nextDouble();
+
         System.out.println("Enter average fuel cost/gal: ");
         double avgFuelCostPerGal = input.nextDouble();
+
         System.out.println("Enter average highway speed: ");
         double avgHighwaySpeed = input.nextDouble();
+
         int distFinal = 0;
+        // dist(ance)Final acts as running counts as well as final distance total to be used in later calculations
         for(int i = 1; i < Waypoints.length; i++ ) {
             int distRow = (Waypoints[i -1]);
             int distCol = (Waypoints[i]);
             int distSum = distanceArray[distRow][distCol];
             distFinal += distSum;
         }
+        // Above function takes coordinates from Waypoints[] and matches them with distanceArray[][] coordinates
+
         double fuelNeeded = distFinal / MPG;
+
         double fuelCost = fuelNeeded * avgFuelCostPerGal;
-        double drivingTimeHours = distFinal / avgHighwaySpeed;
-        int drivingTimeMinutes = (int) (drivingTimeHours * 60) % 60;
-        int drivingTimeHoursInt = (int) drivingTimeHours;
+
+        double drivingTimeRaw = distFinal / avgHighwaySpeed;
+
+        int drivingTimeMinutes = (int) (drivingTimeRaw * 60) % 60;
+        int drivingTimeHours = (int) drivingTimeRaw;
+
         System.out.println("Total route distance: " + distFinal + " miles");
         System.out.println("Anticipated gallons of fuel needed: " + fuelNeeded + " gallons");
         System.out.println("Anticipated cost of fuel: " + "$" + fuelCost);
-        System.out.println("Estimated driving time at " + avgHighwaySpeed + " MPH: " + drivingTimeHoursInt + " Hours " + drivingTimeMinutes + " Minutes");
+        System.out.println("Estimated driving time at " + avgHighwaySpeed + " MPH: " + drivingTimeHours + " Hours " + drivingTimeMinutes + " Minutes");
     }
 }
