@@ -1,5 +1,4 @@
 // TODO: Low Medium High Critical
-//  Low: Truncate doubles to 2 decimal places
 //  Medium: Exceptions for non-integers/characters for int inputs
 //  Medium: Exceptions for non-integer/charcter/0 for Waypoints inputs
 //  Medium: Exceptions for spaces after final inout for Waypoints inputs
@@ -68,8 +67,8 @@ public class SalesRoutePlanner {
         int drivingTimeHours = (int) drivingTimeRaw;
 
         System.out.println("Total route distance: " + distFinal + " miles");
-        System.out.println("Anticipated gallons of fuel needed: " + fuelNeeded + " gallons");
-        System.out.println("Anticipated cost of fuel: " + "$" + fuelCost);
-        System.out.println("Estimated driving time at " + avgHighwaySpeed + " MPH: " + drivingTimeHours + " Hours " + drivingTimeMinutes + " Minutes");
+        System.out.println("Anticipated gallons of fuel needed: " + String.format("%.2f", fuelNeeded)  + " gallons");
+        System.out.println("Anticipated cost of fuel: " + "$" + String.format("%.2f", fuelCost));
+        System.out.println("Estimated driving time at " + String.format("%.0f",avgHighwaySpeed) + " MPH: " + drivingTimeHours + " Hours " + drivingTimeMinutes + " Minutes");
     }
 }
